@@ -1,9 +1,11 @@
 import jsonfile from 'jsonfile';
 import { IUser } from '@entities/User';
+import { IDriver } from '@entities/Driver';
 
 
 interface IDatabase {
     users: IUser[];
+    drivers: IDriver[];
 }
 
 

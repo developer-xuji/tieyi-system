@@ -18,6 +18,7 @@ const { BAD_REQUEST, CREATED, OK } = StatusCodes;
  */
 export async function getAllUsers(req: Request, res: Response) {
     const users = await userDao.getAll();
+    // eslint-disable-next-line no-console
     return res.status(OK).json({users});
 }
 
