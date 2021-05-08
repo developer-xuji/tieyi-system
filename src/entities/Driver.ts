@@ -10,15 +10,15 @@ class Driver implements IDriver {
     public name: string;
     public mobile: string;
 
-    constructor(nameOrUser: string | IDriver, mobile?: string, id?: number) {
-        if (typeof nameOrUser === 'string') {
-            this.name = nameOrUser;
+    constructor(nameOrDriver: string | IDriver, mobile?: string, id?: number) {
+        if (typeof nameOrDriver === 'string') {
+            this.name = nameOrDriver;
             this.mobile = mobile || '';
             this.id = id || -1;
         } else {
-            this.name = nameOrUser.name;
-            this.mobile = nameOrUser.mobile;
-            this.id = nameOrUser.id;
+            this.name = nameOrDriver.name;
+            this.mobile = nameOrDriver.mobile;
+            this.id = nameOrDriver.id;
         }
     }
 }

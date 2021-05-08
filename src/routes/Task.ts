@@ -1,76 +1,71 @@
 import StatusCodes from 'http-status-codes';
 import { Request, Response } from 'express';
 
-import DriverDao from "@daos/Driver/DriverDao";
+import TaskDao from "@daos/Task/TaskDao";
 import { paramMissingError } from '@shared/constants';
 
-const driverDao = new DriverDao();
+const taskDao = new TaskDao();
 const { BAD_REQUEST, CREATED, OK } = StatusCodes;
 
-
-
 /**
- * Get all drivers.
+ * Get all tasks.
  * 
  * @param req 
  * @param res 
  * @returns 
  */
-export async function getAllDrivers(req: Request, res: Response) {
-    const drivers = await driverDao.getAll();
+export async function getAllTasks(req: Request, res: Response) {
+    const tasks = await taskDao.getAll();
     // eslint-disable-next-line no-console
-    return res.status(OK).json({drivers});
+    return res.status(OK).json({tasks});
 }
 
-
 /**
- * Add one drivers.
+ * Add one task.
  * 
  * @param req 
  * @param res 
  * @returns 
  */
-export async function addOneDriver(req: Request, res: Response) {
-    const { driver } = req.body;
-    if (!driver) {
+export async function addOneTask(req: Request, res: Response) {
+    const { task } = req.body;
+    if (!task) {
         return res.status(BAD_REQUEST).json({
             error: paramMissingError,
         });
     }
-    await driverDao.add(driver);
+    await taskDao.add(task);
     return res.status(CREATED).end();
 }
 
-
 /**
- * Update one drivers.
+ * Update one container.
  * 
  * @param req 
  * @param res 
  * @returns 
  */
-export async function updateOneDriver(req: Request, res: Response) {
-    const { driver } = req.body;
-    if (!driver) {
+export async function updateOneTask(req: Request, res: Response) {
+    const { task } = req.body;
+    if (!task) {
         return res.status(BAD_REQUEST).json({
             error: paramMissingError,
         });
     }
-    driver.id = Number(driver.id);
-    await driverDao.update(driver);
+    task.id = Number(task.id);
+    await taskDao.update(task);
     return res.status(OK).end();
 }
 
-
 /**
- * Delete one driver.
+ * Delete one container.
  * 
  * @param req 
  * @param res 
  * @returns 
  */
-export async function deleteOneDriver(req: Request, res: Response) {
+export async function deleteOneTask(req: Request, res: Response) {
     const { id } = req.params;
-    await driverDao.delete(Number(id));
+    await taskDao.delete(Number(id));
     return res.status(OK).end();
 }

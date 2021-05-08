@@ -21,7 +21,13 @@ class DriverDao extends MockDaoMock {
 
     public async add(driver: IDriver): Promise<void> {
         const db = await super.openDb();
-        driver.id = Number(driver.mobile);
+        
+        //自动生成id
+        let driverId = 1;
+        while(db.drivers.filter((d)=>d.id === driverId).length > 0)
+            driverId += 1;
+        driver.id = driverId;
+
         db.drivers.push(driver);
         await super.saveDb(db);
     }
@@ -29,27 +35,27 @@ class DriverDao extends MockDaoMock {
 
     public async update(driver: IDriver): Promise<void> {
         const db = await super.openDb();
-        for (let i = 0; i < db.users.length; i++) {
+        for (let i = 0; i < db.drivers.length; i++) {
             if (db.drivers[i].id === driver.id) {
                 db.drivers[i] = driver;
                 await super.saveDb(db);
                 return;
             }
         }
-        throw new Error('User not found');
+        throw new Error('Driver not found');
     }
 
 
     public async delete(id: number): Promise<void> {
         const db = await super.openDb();
-        for (let i = 0; i < db.users.length; i++) {
+        for (let i = 0; i < db.drivers.length; i++) {
             if (db.drivers[i].id === id) {
                 db.drivers.splice(i, 1);
                 await super.saveDb(db);
                 return;
             }
         }
-        throw new Error('User not found');
+        throw new Error('Driver not found');
     }
 }
 
